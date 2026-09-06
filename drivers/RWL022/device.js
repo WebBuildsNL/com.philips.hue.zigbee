@@ -18,16 +18,16 @@ async onNodeInit({ zclNode }) {
     }
     this.registerCapability('measure_battery', CLUSTER.POWER_CONFIGURATION, {
       getOpts: {
-        getOnStart: false,
-        getOnOnline: false,
-      }/* ,
+        getOnStart: true,
+        getOnOnline: true,
+      },
       reportOpts: {
         configureAttributeReporting: {
-          minInterval: 0,
-          maxInterval: 21600,
+          minInterval: 300,
+          maxInterval: 60000,
           minChange: 1,
         }
-      } */
+      }
     });
 
   	const node = await this.homey.zigbee.getNode(this);
