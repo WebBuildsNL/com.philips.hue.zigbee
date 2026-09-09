@@ -17,12 +17,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JohanBendz/com.philips.hue.zigbee"
+    "url": "git+https://github.com/WebBuildsNL/com.philips.hue.zigbee"
   },
   "author": "Johan Bendz",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/JohanBendz/com.philips.hue.zigbee/issues"
+    "url": "https://github.com/WebBuildsNL/com.philips.hue.zigbee/issues"
   },
-  "homepage": "https://github.com/JohanBendz/com.philips.hue.zigbee#readme"
+  "homepage": "https://github.com/WebBuildsNL/com.philips.hue.zigbee#readme"
 }

@@ -70,12 +70,12 @@
   "speech": [],
   "permissions": [],
   "bugs": {
-    "url": "https://github.com/JohanBendz/com.philips.hue.zigbee/issues"
+    "url": "https://github.com/WebBuildsNL/com.philips.hue.zigbee/issues"
   },
-  "source": "https://github.com/JohanBendz/com.philips.hue.zigbee",
+  "source": "https://github.com/WebBuildsNL/com.philips.hue.zigbee",
   "platforms": [
     "local"
   ],
   "homeyCommunityTopicId": 29734,
-  "support": "https://github.com/JohanBendz/com.philips.hue.zigbee/issues"
+  "support": "https://github.com/WebBuildsNL/com.philips.hue.zigbee/issues"
 }
