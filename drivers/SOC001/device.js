@@ -82,13 +82,6 @@ class ContactSensor extends ZigBeeDevice {
 
     // 0x18 means a global ZCL command. 0x0b is Default Response, not a contact event.
     if (frameControl === 0x18 && commandId === 0x0b && frame.length >= 5) {
-      this.log('[FRAME] default response', JSON.stringify({
-        sequenceNumber,
-        responseToCommandId: frame.readUInt8(3),
-        status: frame.readUInt8(4),
-        frameHex: frame.toString('hex'),
-        meta,
-      }));
       return;
     }
 
@@ -124,7 +117,6 @@ class ContactSensor extends ZigBeeDevice {
 
   _handleBatteryReport(batteryPercentageRemaining) {
     const batteryPercentage = batteryPercentageRemaining / 2;
-    this.log('SOC001 battery percentage:', batteryPercentage);
     this.setCapabilityValue('measure_battery', batteryPercentage).catch(this.error);
   }
 

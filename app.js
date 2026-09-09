@@ -2,10 +2,11 @@
 
 const Homey = require("homey");
 
-// Enable zigbee-cluster logging
+// Enable zigbee-cluster logging. This logs every ZCL frame of every device, so only turn it on
+// while investigating a problem.
 const { debug } = require('zigbee-clusters');
 
-debug(true);
+// debug(true);
 
 class PhilipsHueZigbeeApp extends Homey.App {
   onInit() {

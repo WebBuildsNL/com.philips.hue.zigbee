@@ -101,7 +101,6 @@ class OccupancySensor extends ZigBeeDevice {
 
     const batteryStatus = await this.zclNode.endpoints[2].clusters.powerConfiguration.readAttributes(['batteryPercentageRemaining']);
     const batteryThreshold = this.getSetting('batteryThreshold') || 20;
-    this.log("measure_battery | powerConfiguration - batteryPercentageRemaining (%): ", batteryStatus.batteryPercentageRemaining/2);
     this.setCapabilityValue('measure_battery', batteryStatus.batteryPercentageRemaining/2).catch(this.error);
     this.setCapabilityValue('alarm_battery', (batteryStatus.batteryPercentageRemaining/2 < batteryThreshold) ? true : false).catch(this.error);
 
@@ -157,7 +156,6 @@ class OccupancySensor extends ZigBeeDevice {
 
   onOccupancyAttributeReport(occupancyStatus) {
     const parsedOccupancyStatus = Object.values(occupancyStatus);
-    this.log("Occupancy status:", parsedOccupancyStatus[2]);
     if (parsedOccupancyStatus[2] == true) {
       if (this.isSuppressed) {
         return;
@@ -173,28 +171,22 @@ class OccupancySensor extends ZigBeeDevice {
   onTemperatureMeasuredAttributeReport(measuredTempValue) {
 		const temperatureOffset = this.getSetting('temperature_offset') || 0;
 		const parsedTempValue = this.getSetting('temperature_decimals') === '2' ? Math.round((measuredTempValue / 100) * 100) / 100 : Math.round((measuredTempValue / 100) * 10) / 10;
-		this.log('Temperature:', parsedTempValue, '+ temperature offset', temperatureOffset);
 		this.setCapabilityValue('measure_temperature', parsedTempValue + temperatureOffset);
 	}
 
 	onLuminanceMeasuredAttributeReport(measuredLuxValue) {
 		const parsedLumValue = Math.round(Math.pow(10, (measuredLuxValue - 1) / 10000));
-		this.log('measure_luminance:', parsedLumValue);
 		this.setCapabilityValue('measure_luminance', parsedLumValue);
   }
 
 	onBatteryPercentageRemainingAttributeReport(batteryPercentageRemaining) {
 		const batteryThreshold = this.getSetting('batteryThreshold') || 20;
-		this.log("measure_battery | powerConfiguration - batteryPercentageRemaining (%): ", batteryPercentageRemaining/2);
 		this.setCapabilityValue('measure_battery', batteryPercentageRemaining/2);
 		this.setCapabilityValue('alarm_battery', (batteryPercentageRemaining/2 < batteryThreshold) ? true : false)
   }
 
 	async onSettings({ oldSettings, newSettings, changedKeys }) {
 		
-		this.log('changed keys: ', changedKeys);
-		this.log('newSettings: ', newSettings);
-    this.log('oldSettings: ', oldSettings);
 
     if ((changedKeys.includes('minReportTemp')) || (changedKeys.includes('maxReportTemp'))) {
       if (newSettings.minReportTemp < newSettings.maxReportTemp) {

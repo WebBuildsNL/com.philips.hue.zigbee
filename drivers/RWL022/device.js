@@ -37,7 +37,6 @@ async onNodeInit({ zclNode }) {
       if (typeof this._previousHandleFrame === 'function') {
         this._previousHandleFrame(endpointId, clusterId, frame, meta);
       }
-    this.log("endpointId: ", endpointId,", clusterId: ", clusterId,", frame: ", frame, ", meta: ", meta);
       if  ( clusterId === 64512 ) {
         this._buttonCommandParser(frame);
       } 
@@ -63,7 +62,6 @@ async onNodeInit({ zclNode }) {
         ( frame.readUInt8(4) == 0x00 )
     ) {
         const percentage = frame.readUInt8(6) / 2;
-        this.log("battery percentage: ", percentage);
         this.setCapabilityValue('measure_battery', percentage);
     }
   }

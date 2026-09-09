@@ -4,7 +4,7 @@ const { ZigBeeDevice } = require('homey-zigbeedriver');
 const { debug, Cluster, CLUSTER } = require('zigbee-clusters');
 const HueSpecificBasicCluster = require('../../lib/HueSpecificBasicCluster');
 
-debug(true);
+// debug(true); // note: this is a global switch, it enables frame logging for the whole app
 Cluster.addCluster(HueSpecificBasicCluster);
 
 class DualWallSwitch extends ZigBeeDevice {

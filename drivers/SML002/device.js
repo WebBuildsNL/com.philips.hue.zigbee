@@ -50,7 +50,6 @@ class OutDoorSensor extends ZigBeeDevice {
 					this._boundTemperatureListener = (currentTempValue) => {
 						const temperatureOffset = this.getSetting('temperature_offset') || 0;
 						const temperature = Math.round((currentTempValue / 100) * 10) / 10;
-						this.log('Temperature: ', temperature, ', Offset: ', temperatureOffset);
 						this.setCapabilityValue('measure_temperature', temperature + temperatureOffset).catch(this.error);
 					};
 					zclNode.endpoints[2].clusters[CLUSTER.TEMPERATURE_MEASUREMENT.NAME]
@@ -78,7 +77,6 @@ class OutDoorSensor extends ZigBeeDevice {
 				if (!this._listenersRegistered) {
 					this._boundLuminanceListener = (currentLuxValue) => {
 						const luminance = Math.round(Math.pow(10, (currentLuxValue - 1) / 10000));
-						this.log('Lux: ', luminance);
 						this.setCapabilityValue('measure_luminance', luminance).catch(this.error);
 					};
 					zclNode.endpoints[2].clusters[CLUSTER.ILLUMINANCE_MEASUREMENT.NAME]
@@ -133,7 +131,6 @@ class OutDoorSensor extends ZigBeeDevice {
 					this._boundTemperatureListener = (currentTempValue) => {
 						const temperatureOffset = this.getSetting('temperature_offset') || 0;
 						const temperature = Math.round((currentTempValue / 100) * 10) / 10;
-						this.log('temp: ', temperature);
 						this.setCapabilityValue('measure_temperature', temperature + temperatureOffset).catch(this.error);
 					};
 					zclNode.endpoints[2].clusters[CLUSTER.TEMPERATURE_MEASUREMENT.NAME]
@@ -144,7 +141,6 @@ class OutDoorSensor extends ZigBeeDevice {
 				if (this.hasCapability('measure_luminance')) {
 					this._boundLuminanceListener = (currentLuxValue) => {
 						const luminance = Math.round(Math.pow(10, (currentLuxValue - 1) / 10000));
-						this.log('lux: ', luminance);
 						this.setCapabilityValue('measure_luminance', luminance).catch(this.error);
 					};
 					zclNode.endpoints[2].clusters[CLUSTER.ILLUMINANCE_MEASUREMENT.NAME]
@@ -205,9 +201,6 @@ class OutDoorSensor extends ZigBeeDevice {
 
 	async onSettings({ oldSettings, newSettings, changedKeys }) {
  		
-		this.log('changed keys: ', changedKeys);
-		this.log('newSettings: ', newSettings);
-		this.log('oldSettings: ', oldSettings);
 
 		// measure_temperature report settings changed
 		if ((changedKeys.includes('minReportTemp')) || (changedKeys.includes('maxReportTemp'))) {

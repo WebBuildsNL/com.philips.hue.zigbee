@@ -21,7 +21,6 @@ class TapDialSwitch extends ZigBeeDevice {
       if (typeof this._previousHandleFrame === 'function') {
         this._previousHandleFrame(endpointId, clusterId, frame, meta);
       }
-      this.log("endpointId: ", endpointId,", clusterId: ", clusterId,", frame: ", frame, ", meta: ", meta);
       if  ( clusterId === 64512 ) {
         this._buttonCommandParser(frame);
       }
@@ -32,7 +31,6 @@ class TapDialSwitch extends ZigBeeDevice {
       ) {
           // Example frame: Buffer 18 01 01 21 00 00 20 c8
           const percentage = frame.readUInt8(6) / 2; // translate incoming values 0..200 to 0..100 percent
-          this.log("battery percentage remaining: ", percentage);
           this.setCapabilityValue('measure_battery', percentage);
       }
     };
