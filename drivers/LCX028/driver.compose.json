@@ -1,0 +1,62 @@
+{
+  "name": {
+    "en": "Festavia Globe String Lights"
+  },
+  "$extends": [
+    "light_color_ambiance"
+  ],
+  "capabilities": [
+    "onoff",
+    "dim",
+    "light_hue",
+    "light_saturation",
+    "light_temperature",
+    "light_mode",
+    "festavia_mode",
+    "festavia_speed"
+  ],
+  "energy": {
+    "approximation": {
+      "usageOn": 17.1,
+      "usageOff": 0.5
+    }
+  },
+  "platforms": [
+    "local"
+  ],
+  "connectivity": [
+    "zigbee"
+  ],
+  "zigbee": {
+    "manufacturerName": [
+      "Philips",
+      "Signify Netherlands B.V."
+    ],
+    "productId": [
+      "LCX024",
+      "LCX025",
+      "LCX026",
+      "LCX027",
+      "LCX028",
+      "LCX029"
+    ],
+    "endpoints": {
+      "11": {
+        "clusters": [
+          0,
+          3,
+          4,
+          6,
+          8,
+          768,
+          64515
+        ]
+      }
+    },
+    "learnmode": {
+      "instruction": {
+        "en": "Plug in the power supply of the string lights to start pairing.\n\nIf pairing does not automatically start you probably need to reset the string lights with a remote or a philips hue bridge."
+      }
+    }
+  }
+}

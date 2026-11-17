@@ -24,10 +24,16 @@ Two things worth knowing before you edit this file:
 - Hue Wall Switch Module – Wired (ROM002)
 - Filament Bulb Candle E14 White Ambiance (LTE005)
 - GU10 White Ambiance BT (LTG005)
+- Festavia Globe String Lights, all lengths (LCX024, LCX025, LCX026, LCX027, LCX028, LCX029)
+- Festavia flow actions: colours along the string, Hue gradient scenes, Hue effects with a speed,
+  disco mode (party or chase) with a speed, and stop
+- Festavia light show picker and show speed slider in the device screen
+- Festavia Globe dashboard widget: pick a colour per bulb, styles, disco, effects, scenes and speed
 - `Start dimming` and `Stop dimming` flow actions for lights, with a configurable rate
 
 ### Changed
 
+- Requires Homey firmware 12.3.0 or newer (was 5.0.0), because app widgets need it
 - Updated `homey-zigbeedriver` 2.1.4 → 2.2.17 and `zigbee-clusters` 2.4.1 → 3.6.0
 - App now validates against Homey's `verified` level
 - Requires Node 18 or newer

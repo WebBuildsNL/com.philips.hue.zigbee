@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      .fg { display: flex; flex-direction: column; gap: var(--homey-su-3); }
+      .fg-string { position: relative; }
+      .fg-string svg { display: block; width: 100%; height: auto; overflow: visible; }
+      .fg-globe { cursor: pointer; }
+      .fg-hidden-input { position: absolute; left: 0; top: 0; width: 1px; height: 1px; opacity: 0; border: 0; padding: 0; }
+      .fg-row { display: flex; align-items: center; justify-content: space-between; gap: var(--homey-su-2); }
+      .fg-label { font-size: var(--homey-font-size-small); line-height: var(--homey-line-height-small); color: var(--homey-text-color-light); }
+      .fg-group { display: inline-flex; border: var(--homey-line); border-radius: var(--homey-border-radius-default); overflow: hidden; }
+      .fg-group button { border: 0; background: transparent; color: var(--homey-text-color); font: inherit; font-size: var(--homey-font-size-small); padding: 6px 10px; cursor: pointer; }
+      .fg-group button + button { border-left: var(--homey-line); }
+      .fg-group.is-wide { display: flex; }
+      .fg-group.is-wide button { flex: 1; }
+      .fg-group button.is-active { background: var(--homey-color-highlight); color: var(--homey-text-color-white); }
+      .fg-group button:disabled { opacity: 0.35; cursor: default; }
+      #colorsLabel { flex: 1; }
+      .fg-count { min-width: 64px; text-align: center; font-size: var(--homey-font-size-small); padding: 6px 4px; }
+      .fg-chips { display: flex; flex-wrap: wrap; gap: var(--homey-su-2); }
+      .fg-chip { border: var(--homey-line); border-radius: 999px; background: transparent; color: var(--homey-text-color); font: inherit; font-size: var(--homey-font-size-small); padding: 5px 12px; cursor: pointer; }
+      .fg-chip.is-active { background: var(--homey-color-highlight); border-color: var(--homey-color-highlight); color: var(--homey-text-color-white); }
+      .fg-chip.is-busy { opacity: 0.6; }
+      .fg select { width: 100%; font: inherit; font-size: var(--homey-font-size-small); color: var(--homey-text-color); background: transparent; border: var(--homey-line); border-radius: var(--homey-border-radius-default); padding: 7px 10px; }
+      .fg input[type=range] { flex: 1; accent-color: var(--homey-color-highlight); }
+      .fg-speed-value { min-width: 40px; text-align: right; font-size: var(--homey-font-size-small); }
+      .fg-error { font-size: var(--homey-font-size-small); color: var(--homey-text-color-danger); }
+      .fg-error:empty { display: none; }
+    </style>
+  </head>
+
+  <body class="homey-widget">
+    <div class="fg">
+      <div class="fg-string" id="string"></div>
+
+      <div class="fg-row">
+        <span class="fg-label" id="colorsLabel"></span>
+        <div class="fg-group" aria-label="colours">
+          <button type="button" id="fewer" aria-label="-">&minus;</button>
+          <span class="fg-count" id="count"></span>
+          <button type="button" id="more" aria-label="+">+</button>
+        </div>
+      </div>
+      <div class="fg-group is-wide" id="styles"></div>
+
+      <div class="fg-label" id="showLabel"></div>
+      <div class="fg-chips" id="modes"></div>
+      <select id="scene"></select>
+
+      <div class="fg-row">
+        <span class="fg-label" id="speedLabel"></span>
+        <input type="range" id="speed" min="0" max="100" step="5">
+        <span class="fg-speed-value" id="speedValue"></span>
+      </div>
+
+      <div class="fg-error" id="error"></div>
+    </div>
+
+    <script type="text/javascript">
+      function onHomeyReady(Homey) {
+        // English fallbacks; the app's locales provide the Dutch texts.
+        const TEXT = {
+          colours: 'colours', own_colours: 'Tap a bulb to change its colour', linear: 'Linear', mirrored: 'Mirrored', scattered: 'Scattered',
+          show: 'Light show', speed: 'Speed', scene: 'Choose a Hue scene…', normal: 'Normal',
+          custom: 'Own colours', disco_party: 'Disco party', disco_chase: 'Chase',
+        };
+        const EFFECTS = {
+          candle: 'Candle', fireplace: 'Fireplace', prism: 'Prism', sparkle: 'Sparkle', opal: 'Opal',
+          glisten: 'Glisten', underwater: 'Underwater', cosmos: 'Cosmos', sunbeam: 'Sunbeam', enchant: 'Enchant',
+        };
+        const DEFAULT_COLORS = ['#FF3B30', '#FFCC00', '#34C759', '#007AFF', '#AF52DE'];
+        const MODES = ['normal', 'custom', 'disco_party', 'disco_chase'].concat(Object.keys(EFFECTS).map(id => `effect_${id}`));
+
+        const t = (key, fallback) => {
+          const value = Homey.__(key);
+          return value && value !== key ? value : fallback;
+        };
+        const label = mode => (mode.startsWith('effect_')
+          ? t(`festavia.effects.${mode.slice(7)}`, EFFECTS[mode.slice(7)])
+          : t(`festavia.widget.${mode}`, TEXT[mode]));
+
+        const deviceIds = typeof Homey.getDeviceIds === 'function' ? Homey.getDeviceIds() : [];
+        const deviceId = deviceIds && deviceIds[0] ? deviceIds[0] : '';
+        const api = (method, path, body) => Homey.api(method, `${path}?deviceId=${encodeURIComponent(deviceId)}`, body);
+
+        const $ = id => document.getElementById(id);
+        const view = { colors: DEFAULT_COLORS.slice(), count: 5, style: 'linear', mode: null, speed: 50 };
+        let applyTimer = null;
+        let ready = false;
+
+        function showError(err) {
+          $('error').textContent = err ? (err.message || String(err)) : '';
+        }
+
+        // String preview: a sagging wire with one globe per colour. Tap a globe to pick its colour.
+        const inputs = DEFAULT_COLORS.map((color, index) => {
+          const input = document.createElement('input');
+          input.type = 'color';
+          input.className = 'fg-hidden-input';
+          input.addEventListener('input', () => { view.colors[index] = input.value; renderString(); });
+          input.addEventListener('change', () => { view.colors[index] = input.value; scheduleApply(); });
+          $('string').appendChild(input);
+          return input;
+        });
+
+        function renderString() {
+          const n = view.count;
+          const parts = ['<svg viewBox="0 0 320 112" role="img"><defs>'];
+          for (let i = 0; i < n; i++) {
+            parts.push(`<radialGradient id="fg-glass-${i}" cx=".42" cy=".38" r=".7"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="${view.colors[i]}" stop-opacity=".85"/><stop offset="1" stop-color="${view.colors[i]}"/></radialGradient>`);
+            parts.push(`<radialGradient id="fg-glow-${i}"><stop offset="0" stop-color="${view.colors[i]}" stop-opacity=".45"/><stop offset="1" stop-color="${view.colors[i]}" stop-opacity="0"/></radialGradient>`);
+          }
+          parts.push('</defs><path d="M8 20Q160 76 312 20" fill="none" stroke="var(--homey-text-color-light)" stroke-width="2.5" stroke-linecap="round"/>');
+          for (let i = 0; i < n; i++) {
+            const p = (i + 0.5) / n;
+            const x = 8 + 304 * p;
+            const y = 20 + 112 * p * (1 - p);
+            parts.push(`<g class="fg-globe" data-index="${i}"><circle cx="${x}" cy="${y + 26}" r="30" fill="url(#fg-glow-${i})"/><rect x="${x - 5}" y="${y - 2}" width="10" height="11" rx="2" fill="#222"/><circle cx="${x}" cy="${y + 26}" r="16" fill="url(#fg-glass-${i})"/></g>`);
+          }
+          parts.push('</svg>');
+          const svg = $('string').querySelector('svg');
+          if (svg) svg.remove();
+          $('string').insertAdjacentHTML('beforeend', parts.join(''));
+          $('string').querySelectorAll('.fg-globe').forEach(globe => {
+            globe.addEventListener('click', () => {
+              const input = inputs[Number(globe.dataset.index)];
+              input.value = view.colors[Number(globe.dataset.index)];
+              input.click();
+            });
+          });
+          $('count').textContent = `${n} ${t('festavia.widget.colours', TEXT.colours)}`;
+          $('fewer').disabled = n <= 2;
+          $('more').disabled = n >= 5;
+        }
+
+        function renderStyles() {
+          $('styles').innerHTML = '';
+          ['linear', 'mirrored', 'scattered'].forEach(style => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.textContent = t(`festavia.widget.${style}`, TEXT[style]);
+            button.classList.toggle('is-active', view.style === style);
+            button.addEventListener('click', () => { view.style = style; renderStyles(); scheduleApply(0); });
+            $('styles').appendChild(button);
+          });
+        }
+
+        function renderModes() {
+          $('modes').innerHTML = '';
+          MODES.forEach(mode => {
+            const chip = document.createElement('button');
+            chip.type = 'button';
+            chip.className = 'fg-chip';
+            chip.textContent = label(mode);
+            chip.classList.toggle('is-active', view.mode === mode);
+            chip.addEventListener('click', () => {
+              chip.classList.add('is-busy');
+              run(api('POST', '/mode', { mode })).finally(() => chip.classList.remove('is-busy'));
+            });
+            $('modes').appendChild(chip);
+          });
+          const scene = $('scene');
+          if (view.mode && view.mode.startsWith('scene_')) scene.value = view.mode.slice(6);
+          else scene.value = '';
+        }
+
+        function renderSpeed() {
+          $('speed').value = view.speed;
+          $('speedValue').textContent = `${view.speed}%`;
+        }
+
+        function applyState(state) {
+          if (!state) return;
+          if (Array.isArray(state.colors) && state.colors.length >= 2) {
+            view.count = Math.min(state.colors.length, 5);
+            view.colors = state.colors.concat(DEFAULT_COLORS).slice(0, 5);
+          }
+          if (state.style) view.style = state.style;
+          view.mode = state.mode;
+          if (typeof state.speed === 'number') view.speed = state.speed;
+          renderString();
+          renderStyles();
+          renderModes();
+          renderSpeed();
+        }
+
+        function run(promise) {
+          showError(null);
+          return Promise.resolve(promise).then(applyState).catch(showError);
+        }
+
+        function scheduleApply(delay = 300) {
+          clearTimeout(applyTimer);
+          applyTimer = setTimeout(() => {
+            run(api('POST', '/colors', { colors: view.colors.slice(0, view.count), style: view.style }));
+          }, delay);
+        }
+
+        $('fewer').addEventListener('click', () => { if (view.count > 2) { view.count -= 1; renderString(); scheduleApply(0); } });
+        $('more').addEventListener('click', () => { if (view.count < 5) { view.count += 1; renderString(); scheduleApply(0); } });
+        $('speed').addEventListener('input', () => { $('speedValue').textContent = `${$('speed').value}%`; });
+        $('speed').addEventListener('change', () => run(api('POST', '/speed', { speed: Number($('speed').value) })));
+        $('scene').addEventListener('change', () => {
+          if ($('scene').value) run(api('POST', '/scene', { id: $('scene').value }));
+        });
+
+        $('colorsLabel').textContent = t('festavia.widget.own_colours', TEXT.own_colours);
+        $('showLabel').textContent = t('festavia.widget.show', TEXT.show);
+        $('speedLabel').textContent = t('festavia.widget.speed', TEXT.speed);
+
+        Homey.on('festavia_state', state => {
+          if (!deviceId || !state || !state.deviceId || state.deviceId === deviceId) applyState(state);
+        });
+
+        function finish() {
+          if (ready) return;
+          ready = true;
+          // The body's own height; the document can't be shorter than the initial frame.
+          Homey.ready({ height: Math.ceil(document.body.getBoundingClientRect().height) });
+        }
+
+        renderString();
+        renderStyles();
+        renderModes();
+        renderSpeed();
+
+        Promise.all([api('GET', '/scenes'), api('GET', '/')])
+          .then(([scenes, state]) => {
+            const placeholder = document.createElement('option');
+            placeholder.value = '';
+            placeholder.textContent = t('festavia.widget.scene', TEXT.scene);
+            $('scene').appendChild(placeholder);
+            scenes.forEach(scene => {
+              const option = document.createElement('option');
+              option.value = scene.id;
+              option.textContent = scene.name;
+              $('scene').appendChild(option);
+            });
+            applyState(state);
+          })
+          .catch(showError)
+          .finally(finish);
+      }
+    </script>
+  </body>
+</html>

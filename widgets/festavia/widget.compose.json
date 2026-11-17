@@ -1,0 +1,42 @@
+{
+  "name": {
+    "en": "Festavia Globe",
+    "nl": "Festavia Globe"
+  },
+  "height": 460,
+  "settings": [],
+  "devices": {
+    "type": "app",
+    "singular": true,
+    "filter": {
+      "class": "light",
+      "capabilities": "festavia_mode"
+    }
+  },
+  "api": {
+    "getState": {
+      "method": "GET",
+      "path": "/"
+    },
+    "getScenes": {
+      "method": "GET",
+      "path": "/scenes"
+    },
+    "setColors": {
+      "method": "POST",
+      "path": "/colors"
+    },
+    "setScene": {
+      "method": "POST",
+      "path": "/scene"
+    },
+    "setMode": {
+      "method": "POST",
+      "path": "/mode"
+    },
+    "setSpeed": {
+      "method": "POST",
+      "path": "/speed"
+    }
+  }
+}

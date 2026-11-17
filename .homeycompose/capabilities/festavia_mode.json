@@ -1,0 +1,182 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Light show",
+    "nl": "Lichtshow"
+  },
+  "getable": true,
+  "setable": true,
+  "insights": false,
+  "uiComponent": "picker",
+  "icon": "/assets/capabilities/festavia_mode.svg",
+  "values": [
+    {
+      "id": "normal",
+      "title": {
+        "en": "Normal",
+        "nl": "Normaal"
+      }
+    },
+    {
+      "id": "custom",
+      "title": {
+        "en": "Own colours",
+        "nl": "Eigen kleuren"
+      }
+    },
+    {
+      "id": "disco_party",
+      "title": {
+        "en": "Disco party",
+        "nl": "Disco feest"
+      }
+    },
+    {
+      "id": "disco_chase",
+      "title": {
+        "en": "Chase",
+        "nl": "Looplicht"
+      }
+    },
+    {
+      "id": "effect_candle",
+      "title": {
+        "en": "Candle",
+        "nl": "Kaars"
+      }
+    },
+    {
+      "id": "effect_fireplace",
+      "title": {
+        "en": "Fireplace",
+        "nl": "Openhaard"
+      }
+    },
+    {
+      "id": "effect_prism",
+      "title": {
+        "en": "Prism",
+        "nl": "Prisma"
+      }
+    },
+    {
+      "id": "effect_sparkle",
+      "title": {
+        "en": "Sparkle",
+        "nl": "Sprankel"
+      }
+    },
+    {
+      "id": "effect_opal",
+      "title": {
+        "en": "Opal",
+        "nl": "Opaal"
+      }
+    },
+    {
+      "id": "effect_glisten",
+      "title": {
+        "en": "Glisten",
+        "nl": "Glinstering"
+      }
+    },
+    {
+      "id": "effect_underwater",
+      "title": {
+        "en": "Underwater",
+        "nl": "Onderwater"
+      }
+    },
+    {
+      "id": "effect_cosmos",
+      "title": {
+        "en": "Cosmos",
+        "nl": "Kosmos"
+      }
+    },
+    {
+      "id": "effect_sunbeam",
+      "title": {
+        "en": "Sunbeam",
+        "nl": "Zonnestraal"
+      }
+    },
+    {
+      "id": "effect_enchant",
+      "title": {
+        "en": "Enchant",
+        "nl": "Betovering"
+      }
+    },
+    {
+      "id": "scene_silent_night",
+      "title": {
+        "en": "Silent night",
+        "nl": "Silent night"
+      }
+    },
+    {
+      "id": "scene_under_the_tree",
+      "title": {
+        "en": "Under the tree",
+        "nl": "Under the tree"
+      }
+    },
+    {
+      "id": "scene_festive_fun",
+      "title": {
+        "en": "Festive fun",
+        "nl": "Festive fun"
+      }
+    },
+    {
+      "id": "scene_golden_star",
+      "title": {
+        "en": "Golden star",
+        "nl": "Golden star"
+      }
+    },
+    {
+      "id": "scene_rosy_sparkle",
+      "title": {
+        "en": "Rosy sparkle",
+        "nl": "Rosy sparkle"
+      }
+    },
+    {
+      "id": "scene_colour_burst",
+      "title": {
+        "en": "Colour burst",
+        "nl": "Colour burst"
+      }
+    },
+    {
+      "id": "scene_savanna_sunset",
+      "title": {
+        "en": "Savanna sunset",
+        "nl": "Savanna sunset"
+      }
+    },
+    {
+      "id": "scene_tropical_twilight",
+      "title": {
+        "en": "Tropical twilight",
+        "nl": "Tropical twilight"
+      }
+    },
+    {
+      "id": "scene_galaxy",
+      "title": {
+        "en": "Galaxy",
+        "nl": "Galaxy"
+      }
+    },
+    {
+      "id": "scene_blue_lagoon",
+      "title": {
+        "en": "Blue lagoon",
+        "nl": "Blue lagoon"
+      }
+    }
+  ]
+}

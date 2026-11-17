@@ -1,0 +1,19 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Show speed",
+    "nl": "Showsnelheid"
+  },
+  "getable": true,
+  "setable": true,
+  "insights": false,
+  "uiComponent": "slider",
+  "icon": "/assets/capabilities/festavia_speed.svg",
+  "min": 0,
+  "max": 100,
+  "step": 5,
+  "decimals": 0,
+  "units": {
+    "en": "%"
+  }
+}

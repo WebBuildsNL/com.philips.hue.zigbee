@@ -1,1 +1,37 @@
-{}
+{
+  "festavia": {
+    "errors": {
+      "black": "Black can't be shown, because single bulbs can't be switched off. Pick a dark colour instead.",
+      "unknown_scene": "Unknown gradient scene: __scene__",
+      "unknown_effect": "Unknown effect: __effect__",
+      "no_effects_cluster": "This light doesn't offer the Hue effects cluster. Remove the device and pair it again.",
+      "widget_no_device": "Festavia Globe not found. Pick the string in the widget settings."
+    },
+    "widget": {
+      "colours": "colours",
+      "linear": "Linear",
+      "mirrored": "Mirrored",
+      "scattered": "Scattered",
+      "show": "Light show",
+      "speed": "Speed",
+      "scene": "Choose a Hue scene…",
+      "normal": "Normal",
+      "custom": "Own colours",
+      "disco_party": "Disco party",
+      "disco_chase": "Chase",
+      "own_colours": "Tap a bulb to change its colour"
+    },
+    "effects": {
+      "candle": "Candle",
+      "fireplace": "Fireplace",
+      "prism": "Prism",
+      "sparkle": "Sparkle",
+      "opal": "Opal",
+      "glisten": "Glisten",
+      "underwater": "Underwater",
+      "cosmos": "Cosmos",
+      "sunbeam": "Sunbeam",
+      "enchant": "Enchant"
+    }
+  }
+}

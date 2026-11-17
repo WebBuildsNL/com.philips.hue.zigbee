@@ -3,7 +3,7 @@
 Connect Philips Hue lights, sensors and switches straight to Homey — no Hue Bridge required.
 
 Homey speaks Zigbee natively, so it can talk to Hue hardware directly. This app gives it the
-drivers to do that: **152 drivers** covering lights, motion and contact sensors, dimmer switches,
+drivers to do that: **153 drivers** covering lights, motion and contact sensors, dimmer switches,
 wall modules and the smart plug.
 
 ## Contents
@@ -24,7 +24,7 @@ wall modules and the smart plug.
 
 | | |
 | --- | --- |
-| Homey | firmware 5.0.0 or newer, on a model with a Zigbee radio |
+| Homey | firmware 12.3.0 or newer, on a model with a Zigbee radio. Every Homey Pro, including the 2016–2019 models, can run it |
 | Hue Bridge | not needed — and a light can only be paired to one Zigbee network at a time |
 | Node (development only) | 18 or newer |
 
@@ -56,11 +56,21 @@ On/off, dim, color hue, color saturation, color temperature and color mode for l
 contact, luminance and temperature for sensors; battery level and battery alarm for
 battery-powered devices.
 
+The Festavia Globe String Lights add two tabs to the device screen: a **light show** picker
+(normal, own colours, disco, chase, ten Hue effects and ten gradient scenes) and a **show speed**
+slider that changes a running effect or disco on the fly.
+
+### Widget
+
+The **Festavia Globe** dashboard widget shows the string with one bulb per colour. Tap a bulb to
+pick its colour, choose two to five colours and a style, start disco, chase or a Hue effect, pick
+any of the 75 gradient scenes, and set the speed.
+
 ### Flow cards
 
 The action and condition cards are offered for every device; the ones that need a specific
-capability report "device does not support this" when picked for the wrong device. Triggers are
-scoped to their driver.
+capability report "device does not support this" when picked for the wrong device. Triggers and
+the Festavia cards are scoped to their driver.
 
 | Type | Card | Works on |
 | --- | --- | --- |
@@ -69,6 +79,11 @@ scoped to their driver.
 | Action | Start dimming, with direction and rate | Lights |
 | Action | Stop dimming | Lights |
 | Action | Suppress sensor for a duration | Occupancy sensors |
+| Action | Set two to five colours along the string, linear, mirrored or scattered | Festavia Globe String Lights |
+| Action | Set a Hue gradient scene, 75 scenes from the Hue app | Festavia Globe String Lights |
+| Action | Start a Hue effect, such as candle, prism or sparkle, with a speed | Festavia Globe String Lights |
+| Action | Start disco mode, party or chase, with a speed | Festavia Globe String Lights |
+| Action | Stop effect and disco mode | Festavia Globe String Lights |
 | Condition | Luminance is above / below | Sensors reporting luminance |
 | Condition | Temperature is above / below | Sensors reporting temperature |
 | Trigger | Button pressed, held and released | RWL000, RWL022, RDM001, RDM002, ROM001, ROM002 |
@@ -90,9 +105,9 @@ Generated from the drivers in this repository. The Zigbee model ID is what the d
 its `modelId`; you can look yours up in Homey's developer tools under **Zigbee**.
 
 <details>
-<summary><strong>All 152 supported devices</strong></summary>
+<summary><strong>All 153 supported devices</strong></summary>
 
-#### Lights (140)
+#### Lights (141)
 
 | Device | Zigbee model ID |
 | --- | --- |
@@ -158,6 +173,7 @@ its `modelId`; you can look yours up in Homey's developer tools under **Zigbee**
 | Ensis Pendant - Upper light | `4090330P9_01`, `4090331P9_01`, `LCP001`, `929003053301_01`, `929003052501_01` |
 | Fair Ceiling Lamp | `LTC002`, `4100148U7`, `929003054601` |
 | Fair Pendant | `LTP003`, `4033930P6`, `4033930P7`, `4033931P6`, `4033931P7` |
+| Festavia Globe String Lights | `LCX024`, `LCX025`, `LCX026`, `LCX027`, `LCX028`, `LCX029` |
 | Filament Bulb A60 | `LWA004`, `LWA021` |
 | Filament Bulb Candle E14 | `LWE004` |
 | Filament Bulb Candle E14 White Ambiance | `LTE005` |
@@ -373,7 +389,7 @@ See [CHANGELOG.md](CHANGELOG.md) for the full release history.
 ## Credits
 
 Sebastian Johansson wrote the original app, and Johan Bendz maintained it for years — the bulk of
-the 152 drivers here is their work, plus that of everyone who contributed a device over the years.
+the 153 drivers here is their work, plus that of everyone who contributed a device over the years.
 
 Icons by [Richard Slater](https://thenounproject.com/richard.slater).
 

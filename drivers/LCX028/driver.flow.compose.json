@@ -1,0 +1,174 @@
+{
+  "actions": [
+    {
+      "id": "LCX028_set_colors",
+      "duration": true,
+      "title": {
+        "en": "Set colours along the string",
+        "nl": "Kleuren over het snoer zetten"
+      },
+      "titleFormatted": {
+        "en": "Set colours [[color1]] [[color2]] [[color3]] [[color4]] [[color5]] in style [[style]]",
+        "nl": "Zet kleuren [[color1]] [[color2]] [[color3]] [[color4]] [[color5]] in stijl [[style]]"
+      },
+      "hint": {
+        "en": "Spreads two to five colours over the bulbs. Colours 3 to 5 are optional. Black can't be shown, because single bulbs can't be switched off.",
+        "nl": "Verdeelt twee tot vijf kleuren over de lampen. Kleur 3 tot 5 zijn optioneel. Zwart kan niet, want losse lampen kunnen niet uit."
+      },
+      "args": [
+        {
+          "type": "color",
+          "name": "color1",
+          "title": { "en": "Colour 1", "nl": "Kleur 1" }
+        },
+        {
+          "type": "color",
+          "name": "color2",
+          "title": { "en": "Colour 2", "nl": "Kleur 2" }
+        },
+        {
+          "type": "color",
+          "name": "color3",
+          "required": false,
+          "title": { "en": "Colour 3", "nl": "Kleur 3" }
+        },
+        {
+          "type": "color",
+          "name": "color4",
+          "required": false,
+          "title": { "en": "Colour 4", "nl": "Kleur 4" }
+        },
+        {
+          "type": "color",
+          "name": "color5",
+          "required": false,
+          "title": { "en": "Colour 5", "nl": "Kleur 5" }
+        },
+        {
+          "type": "dropdown",
+          "name": "style",
+          "title": { "en": "Style", "nl": "Stijl" },
+          "values": [
+            { "id": "linear", "label": { "en": "Linear", "nl": "Lineair" } },
+            { "id": "mirrored", "label": { "en": "Mirrored", "nl": "Gespiegeld" } },
+            { "id": "scattered", "label": { "en": "Scattered", "nl": "Verspreid" } }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LCX028_gradient_scene",
+      "title": {
+        "en": "Set a Hue gradient scene",
+        "nl": "Hue-gradientscène zetten"
+      },
+      "titleFormatted": {
+        "en": "Set gradient scene [[scene]]",
+        "nl": "Zet gradientscène [[scene]]"
+      },
+      "hint": {
+        "en": "Five-colour scenes from the Hue app, such as Silent night, Under the tree and Festive fun.",
+        "nl": "Scènes met vijf kleuren uit de Hue-app, zoals Silent night, Under the tree en Festive fun."
+      },
+      "args": [
+        {
+          "type": "autocomplete",
+          "name": "scene",
+          "title": { "en": "Scene", "nl": "Scène" },
+          "placeholder": { "en": "Search a scene", "nl": "Zoek een scène" }
+        }
+      ]
+    },
+    {
+      "id": "LCX028_start_effect",
+      "title": {
+        "en": "Start a Hue effect",
+        "nl": "Hue-effect starten"
+      },
+      "titleFormatted": {
+        "en": "Start effect [[effect]] at speed [[speed]]",
+        "nl": "Start effect [[effect]] op snelheid [[speed]]"
+      },
+      "hint": {
+        "en": "Effects built into the string. They keep running until you stop them, turn the string off or change its colour.",
+        "nl": "Effecten die in het snoer zelf zitten. Ze lopen door tot je ze stopt, het snoer uitzet of de kleur verandert."
+      },
+      "args": [
+        {
+          "type": "dropdown",
+          "name": "effect",
+          "title": { "en": "Effect", "nl": "Effect" },
+          "values": [
+            { "id": "candle", "label": { "en": "Candle", "nl": "Kaars" } },
+            { "id": "fireplace", "label": { "en": "Fireplace", "nl": "Openhaard" } },
+            { "id": "prism", "label": { "en": "Prism", "nl": "Prisma" } },
+            { "id": "sparkle", "label": { "en": "Sparkle", "nl": "Sprankel" } },
+            { "id": "opal", "label": { "en": "Opal", "nl": "Opaal" } },
+            { "id": "glisten", "label": { "en": "Glisten", "nl": "Glinstering" } },
+            { "id": "underwater", "label": { "en": "Underwater", "nl": "Onderwater" } },
+            { "id": "cosmos", "label": { "en": "Cosmos", "nl": "Kosmos" } },
+            { "id": "sunbeam", "label": { "en": "Sunbeam", "nl": "Zonnestraal" } },
+            { "id": "enchant", "label": { "en": "Enchant", "nl": "Betovering" } },
+            { "id": "sunrise", "label": { "en": "Sunrise", "nl": "Zonsopkomst" } },
+            { "id": "sunset", "label": { "en": "Sunset", "nl": "Zonsondergang" } }
+          ]
+        },
+        {
+          "type": "range",
+          "name": "speed",
+          "title": { "en": "Speed", "nl": "Snelheid" },
+          "min": 0,
+          "max": 1,
+          "step": 0.05,
+          "label": "%",
+          "labelMultiplier": 100,
+          "labelDecimals": 0
+        }
+      ]
+    },
+    {
+      "id": "LCX028_start_disco",
+      "title": {
+        "en": "Start disco mode",
+        "nl": "Discomodus starten"
+      },
+      "titleFormatted": {
+        "en": "Start disco mode [[mode]] at speed [[speed]]",
+        "nl": "Start discomodus [[mode]] op snelheid [[speed]]"
+      },
+      "hint": {
+        "en": "Homey sends new colours to the string on every beat, from one beat per 4 seconds up to two per second. It keeps going until you stop it, turn the string off or change its colour.",
+        "nl": "Homey stuurt bij elke tel nieuwe kleuren naar het snoer, van één tel per 4 seconden tot twee per seconde. Het loopt door tot je het stopt, het snoer uitzet of de kleur verandert."
+      },
+      "args": [
+        {
+          "type": "dropdown",
+          "name": "mode",
+          "title": { "en": "Mode", "nl": "Modus" },
+          "values": [
+            { "id": "party", "label": { "en": "Party: random colours", "nl": "Feest: willekeurige kleuren" } },
+            { "id": "chase", "label": { "en": "Chase: a rainbow running along the string", "nl": "Looplicht: een regenboog die over het snoer loopt" } }
+          ]
+        },
+        {
+          "type": "range",
+          "name": "speed",
+          "title": { "en": "Speed", "nl": "Snelheid" },
+          "min": 0,
+          "max": 1,
+          "step": 0.05,
+          "label": "%",
+          "labelMultiplier": 100,
+          "labelDecimals": 0
+        }
+      ]
+    },
+    {
+      "id": "LCX028_stop_effects",
+      "title": {
+        "en": "Stop effect and disco mode",
+        "nl": "Effect en discomodus stoppen"
+      }
+    }
+  ]
+}

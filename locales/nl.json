@@ -1,0 +1,37 @@
+{
+  "festavia": {
+    "errors": {
+      "black": "Zwart kan niet, want losse lampen kunnen niet uit. Kies een donkere kleur.",
+      "unknown_scene": "Onbekende gradientscène: __scene__",
+      "unknown_effect": "Onbekend effect: __effect__",
+      "no_effects_cluster": "Deze lamp biedt het Hue-effectencluster niet aan. Verwijder het apparaat en koppel het opnieuw.",
+      "widget_no_device": "Festavia Globe niet gevonden. Kies het snoer in de widgetinstellingen."
+    },
+    "widget": {
+      "colours": "kleuren",
+      "linear": "Lineair",
+      "mirrored": "Gespiegeld",
+      "scattered": "Verspreid",
+      "show": "Lichtshow",
+      "speed": "Snelheid",
+      "scene": "Kies een Hue-scène…",
+      "normal": "Normaal",
+      "custom": "Eigen kleuren",
+      "disco_party": "Disco feest",
+      "disco_chase": "Looplicht",
+      "own_colours": "Tik op een lamp voor een andere kleur"
+    },
+    "effects": {
+      "candle": "Kaars",
+      "fireplace": "Openhaard",
+      "prism": "Prisma",
+      "sparkle": "Sprankel",
+      "opal": "Opaal",
+      "glisten": "Glinstering",
+      "underwater": "Onderwater",
+      "cosmos": "Kosmos",
+      "sunbeam": "Zonnestraal",
+      "enchant": "Betovering"
+    }
+  }
+}
